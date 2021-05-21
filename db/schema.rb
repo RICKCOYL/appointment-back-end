@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_05_18_140456) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bookings", force: :cascade do |t|
     t.string "title"
     t.datetime "date"

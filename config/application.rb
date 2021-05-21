@@ -19,11 +19,7 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-<<<<<<< HEAD
 module Appointment
-=======
-module AppointmentBackEnd
->>>>>>> 0c412f56dd0e5244fccc62284332d230098bd43d
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
