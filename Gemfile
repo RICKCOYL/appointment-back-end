@@ -12,6 +12,7 @@ gem 'hirb', '~> 0.7.3'
 gem 'puma', '~> 5.0'
 gem 'rubocop', '>= 1.0', '< 2.0'
 gem 'pg', '~> 1.2', '>= 1.2.3'
+gem 'jwt'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
