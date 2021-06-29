@@ -2,15 +2,9 @@
 class UsersController < ApplicationController
   # POST /signup
   skip_before_action :authorize_request, only: :create
-
-  # return authenticated token upon signup
-  def index
-    user = User.all
-  end
   
   def create
     user = User.create!(user_params)
-    puts "hello"
     auth_token = AuthenticateUser.new(user.email, user.password).call
     response = { message: Message.account_created, auth_token: auth_token }
     json_response(response, :created)

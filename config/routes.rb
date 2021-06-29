@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :bookings
+  resources :bookings, :except => [:update]
   resources :users
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
