@@ -1,5 +1,5 @@
 require 'test_helper'
-
+# rubocop:disable Layout/LineLength
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
@@ -38,3 +38,4 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response 204
   end
 end
+# rubocop:enable Layout/LineLength

@@ -5,13 +5,13 @@ class BookingsController < ApplicationController
   def index
     @bookings = Booking.all
 
-    #render json: @bookings
+    # render json: @bookings
     json_response(@bookings)
   end
 
   # GET /bookings/1
   def show
-    #render json: @booking
+    # render json: @booking
     json_response(@booking)
   end
 
@@ -36,6 +36,6 @@ class BookingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def booking_params
-    params.require(:booking).permit(:title, :date, :time, :details, :user_id,)
+    params.require(:booking).permit(:title, :date, :time, :details, :user_id)
   end
 end

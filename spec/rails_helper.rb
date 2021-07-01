@@ -1,3 +1,4 @@
+# rubocop:disable Lint/ShadowingOuterLocalVariable
 require 'spec_helper'
 require 'support/request_spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -6,8 +7,7 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
-
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 # [...]
 # configure shoulda matchers to use rspec as the test framework and full matcher libraries for rails
 
@@ -26,7 +26,6 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
-  
 
   # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
   config.before(:suite) do
@@ -42,3 +41,4 @@ RSpec.configure do |config|
   end
   # [...]
 end
+# rubocop:enable Lint/ShadowingOuterLocalVariable

@@ -17,6 +17,5 @@ RSpec.describe AuthenticateUser do
         expect(token).not_to be_nil
       end
     end
-
   end
 end
