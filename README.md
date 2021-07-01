@@ -43,7 +43,7 @@ $ rails db:migrate
 After making the local copy of the repository:
 - get inside the repository folder;
 - setup the gems of the project: in the terminal run: ```bundle install```
-- enter the command: ```rails s -p 9000``` to start the server in localhost.
+- enter the command: ```rails s ``` to start the server in localhost.
 - then you get the application in the localhost in your web browser.
 
 ## Test the application
