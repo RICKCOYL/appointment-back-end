@@ -15,7 +15,7 @@ class DoctorsController < ApplicationController
 
   # POST /doctors
   def create
-    @doctor = current_user.bookings.create!(doctor_params)
+    @doctor = Doctor.create!(doctor_params)
     json_response(@doctor, :created)
   end
 
@@ -33,6 +33,6 @@ class DoctorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def doctor_params
-      params.require(:doctor).permit(:user_id, :booking_id, :doctor)
+      params.permit(:user_id, :booking_id, :doctor)
     end
 end
