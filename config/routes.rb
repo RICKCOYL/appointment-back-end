@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :urgent_listings
+  resources :listings
+  resources :urgents
   resources :bookings, :except => [:update]
   resources :users
   post 'auth/login', to: 'authentication#authenticate'
