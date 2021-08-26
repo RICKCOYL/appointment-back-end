@@ -1,5 +1,11 @@
+# rubocop:disable Layout/EndOfLine
 require 'rails_helper'
 
 RSpec.describe Urgent, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # test for validations of listings
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:date) }
+  it { should validate_presence_of(:time) }
+  it { should validate_presence_of(:details) }
 end
+# rubocop:enable Layout/EndOfLine

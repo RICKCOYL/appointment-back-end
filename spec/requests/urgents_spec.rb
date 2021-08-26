@@ -12,116 +12,37 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/urgents", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # Urgent. As you add validations to Urgent, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # UrgentsController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    {}
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Urgent.create! valid_attributes
-      get urgents_url, headers: valid_headers, as: :json
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      urgent = Urgent.create! valid_attributes
-      get urgent_url(urgent), as: :json
-      expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Urgent" do
-        expect {
-          post urgents_url,
-               params: { urgent: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Urgent, :count).by(1)
-      end
-
-      it "renders a JSON response with the new urgent" do
-        post urgents_url,
-             params: { urgent: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Urgent" do
-        expect {
-          post urgents_url,
-               params: { urgent: invalid_attributes }, as: :json
-        }.to change(Urgent, :count).by(0)
-      end
-
-      it "renders a JSON response with errors for the new urgent" do
-        post urgents_url,
-             params: { urgent: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+RSpec.describe '/urgents', type: :request do
+  describe 'GET /index' do
+    # create test user
+    let!(:user) { create(:user) }
+    # set headers for authorization
+    let(:headers) { valid_headers }
+    let(:valid_headers) do
+      {
+        'Content-Type' => 'application/json',
+        'Authorization' => token_generator(user.id)
       }
-
-      it "updates the requested urgent" do
-        urgent = Urgent.create! valid_attributes
-        patch urgent_url(urgent),
-              params: { urgent: new_attributes }, headers: valid_headers, as: :json
-        urgent.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the urgent" do
-        urgent = Urgent.create! valid_attributes
-        patch urgent_url(urgent),
-              params: { urgent: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
+    end
+    let(:invalid_headers) do
+      {
+        'Authorization' => nil
+      }
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the urgent" do
-        urgent = Urgent.create! valid_attributes
-        patch urgent_url(urgent),
-              params: { urgent: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
+    # set test valid and invalid urgents
+    let!(:urgent) { create_list(:urgent, 10) }
 
-  describe "DELETE /destroy" do
-    it "destroys the requested urgent" do
-      urgent = Urgent.create! valid_attributes
-      expect {
-        delete urgent_url(urgent), headers: valid_headers, as: :json
-      }.to change(Urgent, :count).by(-1)
+    # get urgents index and return json
+    before { get '/urgents', params: {}, headers: headers }
+
+    it 'returns urgents' do
+      expect(json).not_to be_empty
+      expect(json.size).to eq(10)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 end

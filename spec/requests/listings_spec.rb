@@ -12,116 +12,30 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/listings", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # Listing. As you add validations to Listing, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+RSpec.describe '/listings', type: :request do
+  # Test suite for GET /listings test :title :details :date and :time
+  # create test user
+  let!(:user) { create(:user) }
+  # set headers for authorization
+  let(:headers) { valid_headers }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  # define listing_id from user
+  let!(:listings) { create(:listing, user_id: user.id) }
+  let!(:listing_id) { listings.id }
 
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # ListingsController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    {}
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Listing.create! valid_attributes
-      get listings_url, headers: valid_headers, as: :json
-      expect(response).to be_successful
-    end
+  # Test suite for GET /listings
+  let(:valid_headers) do
+    {
+      'Authorization' => token_generator(user.id)
+    }
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      listing = Listing.create! valid_attributes
-      get listing_url(listing), as: :json
-      expect(response).to be_successful
-    end
-  end
+  describe 'GET /listings' do
+    # make HTTP get request before each example
+    before { get '/listings', params: {}, headers: headers }
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Listing" do
-        expect {
-          post listings_url,
-               params: { listing: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Listing, :count).by(1)
-      end
-
-      it "renders a JSON response with the new listing" do
-        post listings_url,
-             params: { listing: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Listing" do
-        expect {
-          post listings_url,
-               params: { listing: invalid_attributes }, as: :json
-        }.to change(Listing, :count).by(0)
-      end
-
-      it "renders a JSON response with errors for the new listing" do
-        post listings_url,
-             params: { listing: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested listing" do
-        listing = Listing.create! valid_attributes
-        patch listing_url(listing),
-              params: { listing: new_attributes }, headers: valid_headers, as: :json
-        listing.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the listing" do
-        listing = Listing.create! valid_attributes
-        patch listing_url(listing),
-              params: { listing: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the listing" do
-        listing = Listing.create! valid_attributes
-        patch listing_url(listing),
-              params: { listing: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested listing" do
-      listing = Listing.create! valid_attributes
-      expect {
-        delete listing_url(listing), headers: valid_headers, as: :json
-      }.to change(Listing, :count).by(-1)
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 end

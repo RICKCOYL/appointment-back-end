@@ -1,5 +1,6 @@
 # rubocop:disable Lint/ShadowingOuterLocalVariable
 require 'spec_helper'
+require 'support/factory_bot'
 require 'support/request_spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
