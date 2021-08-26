@@ -1,4 +1,3 @@
-# rubocop:disable Layout/EndOfLine
 require 'rails_helper'
 
 RSpec.describe Urgent, type: :model do
@@ -8,4 +7,3 @@ RSpec.describe Urgent, type: :model do
   it { should validate_presence_of(:time) }
   it { should validate_presence_of(:details) }
 end
-# rubocop:enable Layout/EndOfLine
