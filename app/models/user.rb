@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 class User < ApplicationRecord
   has_many :urgents, dependent: :destroy
   has_many :listings, dependent: :destroy
@@ -11,3 +12,4 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :username, uniqueness: { case_sensitive: false }
 end
+# rubocop:enable Layout/LineLength
